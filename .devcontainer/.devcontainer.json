@@ -1,0 +1,11 @@
+{
+  "name": "Terraform Dev Environment",
+
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+
+  "remoteUser": "vscode"
+}
