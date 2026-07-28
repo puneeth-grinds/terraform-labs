@@ -1,7 +1,7 @@
 # Creating S3 bucket
 
 resource "aws_s3_bucket" "demo" {
-  bucket = "Kryptxx-demo_bucket"
+  bucket = "kryptxx-demo-bucket"
 
   tags = {
     Name        = "My bucket"
