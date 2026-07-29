@@ -1,5 +1,6 @@
 resource "aws_vpc" "main" {
-    tags = {
-      Name = "terraform-modules-vpc"
-    }
+  cidr_block = var.cidr_block
+  tags = {
+    Name = "terraform-modules-vpc"
+  }
 }
