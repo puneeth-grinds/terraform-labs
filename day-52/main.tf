@@ -1,10 +1,7 @@
 # Creating S3 bucket
 
 resource "aws_s3_bucket" "demo" {
-  bucket = "kryptxx-demo-bucket"
-
-  tags = {
-    Name        = "My bucket"
-    Environment = "dev"
-  }
+  bucket = var.bucket_name
+  tags   = local.common_tags
 }
+
