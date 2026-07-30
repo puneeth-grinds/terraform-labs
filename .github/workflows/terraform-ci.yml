@@ -98,7 +98,6 @@ jobs:
           gh pr comment "$PR_NUMBER" --body-file=tfplan.txt
 
   terraform-apply:
-    needs: terraform-plan
     runs-on: ubuntu-24.04
 
     defaults:
@@ -121,13 +120,10 @@ jobs:
       
       - name: init 
         run: terraform init
-      
-      - name: download artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: terraform-plan
-          path: .  
-      
-      - name: terraform appply
+
+      - name: plan 
+        run: terraform plan -out=tfplan
+
+      - name: terraform apply
         run: terraform apply tfplan 
 
