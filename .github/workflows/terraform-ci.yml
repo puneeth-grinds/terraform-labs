@@ -1,0 +1,95 @@
+name: Ci Terraform 
+
+permisions:
+  contents: read
+  pull-requests: write
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main 
+
+jobs:
+  terraform-fmt:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: day-52
+    
+    steps: 
+      - name: fetch repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: install terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.6
+
+      - name: terraform format
+        run: terraform fmt -check
+
+  terraform-validate:
+    needs: terraform-fmt
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: day-52
+
+    steps:
+      - name: fetch repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    
+      - name: install terraform 
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.6
+      
+      - name: init
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+      
+  terraform-plan:
+    runs-on: ubuntu-24.04
+    needs: terraform-validate 
+
+    defaults:
+      run:
+        working-directory: day-52
+    
+    steps:
+      - name: fetch repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: install terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.6
+      
+      - name: init 
+        run: terraform init 
+      
+      - name: plan 
+        run: terraform plan -out=tfplan 
+
+      - name: upload plan 
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan 
+          path: tfplan 
+      
+      - name: read terraform plan 
+        run: terraform show -no-color tfplan > tfplan.txt
+      
+      - name: comment PR with file 
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+        run: |
+          gh pr comment "$PR_NUMBER" --body-file=tfplan.txt
+
+
