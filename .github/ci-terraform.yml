@@ -10,7 +10,7 @@ on:
 
 jobs:
   terraform-fmt:
-    runs-on: ubuntu-
+    runs-on: ubuntu-24.04
     
     steps: 
       - name: fetch repo
