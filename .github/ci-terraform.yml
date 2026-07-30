@@ -21,6 +21,8 @@ jobs:
 
       - name: install terraform
         uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.6
 
       - name: terraform format
         run: terraform fmt -check
@@ -61,6 +63,8 @@ jobs:
 
       - name: install terraform
         uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.6
       
       - name: init 
         run: terraform init 
@@ -73,5 +77,8 @@ jobs:
         with:
           name: terraform-plan 
           path: tfplan 
+      
+      - name: read terraform plan 
+        run: terraform show. -no-color tfplan 
 
 
