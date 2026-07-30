@@ -104,7 +104,7 @@ jobs:
         working-directory: day-52
 
     needs: terraform-plan
-    runs-on: ubunutu-24.04
+    runs-on: ubuntu-24.04
 
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     env:
@@ -122,24 +122,11 @@ jobs:
       
       - name: init 
         run: terraform init
-
-      - name: plan 
-        run: terraform plan -out=tfplan
-
-      - name: upload plan 
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-plan 
-          path: tfplan 
       
       - name: download artifact
         uses: actions/download-artifact@v8
         with:
-          name: tfplan-artifact
+          name: terraform-plan
           path: tfplan
-      
-      - name: terraform apply
-        run: terraform apply
-      
 
 
