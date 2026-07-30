@@ -1,5 +1,9 @@
 name: Ci Terraform 
 
+permisions:
+  contents: read
+  pull-requests: write
+
 on:
   push:
     branches:
@@ -79,6 +83,13 @@ jobs:
           path: tfplan 
       
       - name: read terraform plan 
-        run: terraform show. -no-color tfplan 
+        run: terraform show -no-color tfplan > tfplan.txt
+      
+      - name: comment PR with file 
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+        run: |
+          gh pr comment "$PR_NUMBER" --body-file=tfplan.txt
 
 
