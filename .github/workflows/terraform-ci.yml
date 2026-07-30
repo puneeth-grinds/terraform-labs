@@ -98,19 +98,18 @@ jobs:
           gh pr comment "$PR_NUMBER" --body-file=tfplan.txt
 
   terraform-apply:
-  
-    defaults:
-      run:
-        working-directory: day-52
-
     needs: terraform-plan
     runs-on: ubuntu-24.04
 
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    defaults:
+      run:
+        working-directory: day-52
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      
     env:
       AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}      
-    
+      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}  
+     
     steps:
       - name: fetch repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -127,6 +126,5 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: terraform-plan
-          path: .
-
+          path: .  
 
