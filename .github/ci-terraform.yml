@@ -11,6 +11,9 @@ on:
 jobs:
   terraform-fmt:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: day-52
     
     steps: 
       - name: fetch repo
@@ -23,7 +26,11 @@ jobs:
         run: terraform fmt -check
 
   terraform-validate:
+    needs: terraform-fmt
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: day-52
 
     steps:
       - name: fetch repo
