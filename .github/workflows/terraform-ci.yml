@@ -1,6 +1,6 @@
 name: Ci Terraform 
 
-permisions:
+permissions:
   contents: read
   pull-requests: write
 
