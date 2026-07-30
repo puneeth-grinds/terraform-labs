@@ -127,4 +127,7 @@ jobs:
         with:
           name: terraform-plan
           path: .  
+      
+      - name: terraform appply
+        run: terraform apply tfplan 
 
