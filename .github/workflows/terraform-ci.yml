@@ -127,6 +127,6 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: terraform-plan
-          path: tfplan
+          path: .
 
 
