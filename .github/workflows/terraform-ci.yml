@@ -78,6 +78,9 @@ jobs:
       
       - name: plan 
         run: terraform plan -out=tfplan
+        env:
+          AWS_ACCESS_ID: ${{secrets.AWS_ACCESS_ID}}
+          AWS_SECRET_KEY: ${{secrets.AWS_ACCESS_KEY}}
 
       - name: upload plan 
         uses: actions/upload-artifact@v4
