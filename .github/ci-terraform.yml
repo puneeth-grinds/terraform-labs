@@ -47,3 +47,20 @@ jobs:
       - name: validate
         run: terraform validate
       
+  terraform-plan:
+    runs-on: ubuntu-24.04
+    needs: terrraform validate 
+
+    defaults:
+      run:
+        working-directory: day-52
+    
+    steps:
+      - name: fetch repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: install terraform
+        uses: hashicorp/setup-terraform@v3
+      
+      
+
