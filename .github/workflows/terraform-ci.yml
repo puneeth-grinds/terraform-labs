@@ -73,8 +73,8 @@ jobs:
       - name: init 
         run: terraform init
         env:
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_ID}}
-          AWS_SECRET_KEY_ID: ${{secrets.AWS_ACCESS_KEY}}
+          AWS_ACCESS_ID: ${{secrets.AWS_ACCESS_ID}}
+          AWS_SECRET_KEY: ${{secrets.AWS_ACCESS_KEY}}
       
       - name: plan 
         run: terraform plan -out=tfplan
