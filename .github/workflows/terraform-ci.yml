@@ -119,5 +119,20 @@ jobs:
       - name: init 
         run: terraform init
 
+      - name: plan 
+        run: terraform plan -out=tfplan
+
+      - name: upload plan 
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan 
+          path: tfplan 
+      
+      - name: download artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: tfplan-artifact
+          path: day-52/tfplan 
+      
       
 
